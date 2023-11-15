@@ -151,8 +151,8 @@ export async function fetchInvoicesPages(query: string) {
   }
 }
 
-export async function fetchInvoiceById(id: string) {
-	noStore();
+export async function fetchInvoiceById(id: string): Promise<InvoiceForm | undefined> {
+  noStore();
   try {
     const data = await sql<InvoiceForm>`
       SELECT
@@ -164,7 +164,7 @@ export async function fetchInvoiceById(id: string) {
       WHERE invoices.id = ${id};
     `;
 
-    const invoice = data.rows.map((invoice) => ({
+    const invoice = data.rows.map<InvoiceForm>((invoice) => ({
       ...invoice,
       // Convert amount from cents to dollars
       amount: invoice.amount / 100,
@@ -174,6 +174,8 @@ export async function fetchInvoiceById(id: string) {
   } catch (error) {
     console.error('Database Error:', error);
   }
+
+  return;
 }
 
 export async function fetchCustomers() {
