@@ -13,8 +13,11 @@ import {
   LatestInvoicesSkeleton,
   RevenueChartSkeleton,
 } from "@/app/ui/skeletons";
+import { redirect } from 'next/navigation';
 
 export default async function Page() {
+  redirect('/login');
+	// if we do this, it tries to go to /core/login but redirects after to /login
   return (
     <main>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
